@@ -57,16 +57,13 @@ resource "kubectl_manifest" "sync" {
   yaml_body  = each.value
 }
 
+resource "kubernetes_secret" "fluxauth" {
+  depends_on = [kubectl_manifest.install]
 
-
-# resource "kubernetes_secret" "fluxauth" {
-#   depends_on = [kubectl_manifest.install]
-
-#   metadata {
-#     name      = try(var.setting.flux_auth_secret, "flux-system")
-#     namespace = var.setting.namespace
-#   }
-#   data = try(var.setting.secret.data, null)
-#   type = try(var.setting.secret.type, null)
-# }
-
+  metadata {
+    name      = try(var.setting.flux_auth_secret, "flux-system")
+    namespace = var.setting.namespace
+  }
+  data = try(var.setting.secret.data, null)
+  type = try(var.setting.secret.type, null)
+}
