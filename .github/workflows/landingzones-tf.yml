@@ -252,7 +252,7 @@ jobs:
       - name: Remove launchpad
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a destroy \
-            -var-folder ${GITHUB_WORKSPACE}/caf_launchpad/scenario/200 \
+            -var-folder ${GITHUB_WORKSPACE}/caf_launchpad/scenario/100 \
             -level level0 \
             -launchpad \
             -parallelism=30 \
