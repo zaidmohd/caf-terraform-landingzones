@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: landingzones-tf15
+name: landingzones-tf
 
 on:
   workflow_dispatch:
@@ -55,7 +55,7 @@ jobs:
 
       - name: launchpad
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a plan \
             -var-folder ${GITHUB_WORKSPACE}/caf_launchpad/scenario/100 \
             -level level0 \
             -launchpad \
