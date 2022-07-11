@@ -46,17 +46,17 @@ jobs:
 
           echo "local user: $(whoami)"
 
-      # - name: launchpad
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a apply \
-      #       -var-folder ${GITHUB_WORKSPACE}/caf_launchpad/scenario/100 \
-      #       -level level0 \
-      #       -launchpad \
-      #       -parallelism=30 \
-      #       --environment ${{ github.run_id }} \
-      #       '-var random_length=${{ matrix.random_length }}' \
-      #       '-var prefix=g${{ github.run_id }}' \
-      #       '-var tags={testing_job_id="${{ github.run_id }}"}'
+      - name: launchpad
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/caf_launchpad/scenario/100 \
+            -level level0 \
+            -launchpad \
+            -parallelism=30 \
+            --environment ${{ github.run_id }} \
+            '-var random_length=${{ matrix.random_length }}' \
+            '-var prefix=g${{ github.run_id }}' \
+            '-var tags={testing_job_id="${{ github.run_id }}"}'
 
       # - name: foundations
       #   run: |
