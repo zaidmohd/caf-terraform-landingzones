@@ -37,13 +37,10 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:1.2.3-2207.0109
+      image: aztfmod/rover:0.15.5-2203.2311
       options: --user 0
 
     steps:
-      - name: Workaround permission issue
-        run: git config --global --add safe.directory /__w/landingzones/landingzones
-
       - uses: actions/checkout@v2
 
       - name: Login azure
@@ -55,7 +52,7 @@ jobs:
 
       - name: launchpad
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a plan \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a apply \
             -var-folder ${GITHUB_WORKSPACE}/caf_launchpad/scenario/100 \
             -level level0 \
             -launchpad \
@@ -65,16 +62,16 @@ jobs:
             '-var prefix=g${{ github.run_id }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
 
-      # - name: foundations
-      #   run: |
-      #     sleep 180
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution -a apply \
-      #       -var-folder ${GITHUB_WORKSPACE}/caf_solution/scenario/foundations/100-passthrough \
-      #       -tfstate caf_foundations.tfstate \
-      #       -level level1 \
-      #       -parallelism=30 \
-      #       --environment ${{ github.run_id }} \
-      #       '-var tags={testing_job_id="${{ github.run_id }}"}'
+  #     - name: foundations
+  #       run: |
+  #         sleep 180
+  #         /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution -a apply \
+  #           -var-folder ${GITHUB_WORKSPACE}/caf_solution/scenario/foundations/100-passthrough \
+  #           -tfstate caf_foundations.tfstate \
+  #           -level level1 \
+  #           -parallelism=30 \
+  #           --environment ${{ github.run_id }} \
+  #           '-var tags={testing_job_id="${{ github.run_id }}"}'
 
   # networking100:
   #   name: networking-100
@@ -93,7 +90,7 @@ jobs:
   #         ]
 
   #   container:
-  #     image: aztfmod/rover-preview:0.15.5-2205.300342
+  #     image: aztfmod/rover:0.15.5-2203.2311
   #     options: --user 0
 
   #   steps:
@@ -136,7 +133,7 @@ jobs:
   #         random_length: ['5']
 
   #   container:
-  #     image: aztfmod/rover-preview:0.15.5-2205.300342
+  #     image: aztfmod/rover:0.15.5-2203.2311
   #     options: --user 0
 
   #   steps:
@@ -187,7 +184,7 @@ jobs:
   #         ]
 
   #   container:
-  #     image: aztfmod/rover-preview:0.15.5-2205.300342
+  #     image: aztfmod/rover:0.15.5-2203.2311
   #     options: --user 0
 
   #   steps:
@@ -229,7 +226,7 @@ jobs:
   #       random_length: ['5']
 
   #   container:
-  #     image: aztfmod/rover-preview:0.15.5-2205.300342
+  #     image: aztfmod/rover:0.15.5-2203.2311
   #     options: --user 0
 
   #   steps:

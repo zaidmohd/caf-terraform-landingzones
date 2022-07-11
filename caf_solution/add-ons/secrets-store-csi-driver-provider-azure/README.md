@@ -31,8 +31,6 @@ csi_keyvault_provider = {
   secretproviderclass_name = "azure-tls"
   secret_name              = "azure-tls"
   cert_name                = "wildcard-ingress"
-  keyvault_name            = "kv-app-gateway-certs"    # Keyvault name - takes precedence over keyvault_key
-  lz_key                   = "lz_key"                  # If keyvault_key is stored in a remote landingzone
-  keyvault_key             = "kv_key"                  # The keyvault object key
+  keyvault_name            = "kv-app-gateway-certs"
 }
 ```

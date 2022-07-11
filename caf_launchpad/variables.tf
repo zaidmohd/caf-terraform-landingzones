@@ -11,15 +11,6 @@ variable "tfstate_key" {
 variable "tfstate_resource_group_name" {
   default = null
 }
-variable "tfstate_organization" {
-  default = null
-}
-variable "tfstate_hostname" {
-  default = null
-}
-variable "workspace" {
-  default = null
-}
 
 variable "tenant_id" {}
 variable "landingzone" {
@@ -253,4 +244,3 @@ variable "container_groups" {
 variable "network_profiles" {
   default = {}
 }
-

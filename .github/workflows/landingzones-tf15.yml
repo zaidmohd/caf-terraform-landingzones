@@ -33,7 +33,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover-preview:0.15.5-2205.300342
+      image: aztfmod/rover:0.15.5-2203.2311
       options: --user 0
 
     steps:
@@ -43,7 +43,9 @@ jobs:
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
           echo "local user: $(whoami)"
+
       - name: launchpad
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a apply \
@@ -55,6 +57,7 @@ jobs:
             '-var random_length=${{ matrix.random_length }}' \
             '-var prefix=g${{ github.run_id }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
+
       - name: foundations
         run: |
           sleep 180
@@ -65,6 +68,7 @@ jobs:
             -parallelism=30 \
             --environment ${{ github.run_id }} \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
+
   networking100:
     name: networking-100
     runs-on: ubuntu-latest
@@ -82,7 +86,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover-preview:0.15.5-2205.300342
+      image: aztfmod/rover:0.15.5-2203.2311
       options: --user 0
 
     steps:
@@ -92,6 +96,7 @@ jobs:
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution/ -a apply \
@@ -100,6 +105,7 @@ jobs:
             -parallelism=30 \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }}
+
       - name: destroy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution/ -a destroy \
@@ -109,6 +115,7 @@ jobs:
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }} \
             -refresh=false
+
   foundations200:
     name: foundations-200
     runs-on: ubuntu-latest
@@ -122,7 +129,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover-preview:0.15.5-2205.300342
+      image: aztfmod/rover:0.15.5-2203.2311
       options: --user 0
 
     steps:
@@ -132,7 +139,9 @@ jobs:
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
           echo "local user: $(whoami)"
+
       - name: launchpad-200-upgrade
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a apply \
@@ -144,6 +153,7 @@ jobs:
             '-var random_length=${{ matrix.random_length }}' \
             '-var prefix=g${{ github.run_id }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
+
       - name: foundations-200-upgrade
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution -a apply \
@@ -153,6 +163,7 @@ jobs:
             -parallelism=30 \
             --environment ${{ github.run_id }} \
              '-var tags={testing_job_id="${{ github.run_id }}"}'
+
   networking200:
     name: networking-200
     runs-on: ubuntu-latest
@@ -169,7 +180,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover-preview:0.15.5-2205.300342
+      image: aztfmod/rover:0.15.5-2203.2311
       options: --user 0
 
     steps:
@@ -179,6 +190,7 @@ jobs:
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution/ -a apply \
@@ -187,6 +199,7 @@ jobs:
             -parallelism=30 \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }}
+
       - name: destroy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution/ -a destroy \
@@ -196,6 +209,7 @@ jobs:
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }} \
             -refresh=false
+
   foundations_destroy:
     name: foundations_destroy
     runs-on: ubuntu-latest
@@ -208,7 +222,7 @@ jobs:
         random_length: ['5']
 
     container:
-      image: aztfmod/rover-preview:0.15.5-2205.300342
+      image: aztfmod/rover:0.15.5-2203.2311
       options: --user 0
 
     steps:
@@ -218,7 +232,9 @@ jobs:
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
           echo "local user: $(whoami)"
+
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_solution -a destroy \
@@ -228,6 +244,7 @@ jobs:
             -parallelism=30 \
             --environment ${{ github.run_id }} \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
+
       - name: Remove launchpad
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/caf_launchpad -a destroy \
@@ -239,6 +256,8 @@ jobs:
             '-var random_length=${{ matrix.random_length }}' \
             '-var prefix=g${{ github.run_id }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
+
+
       - name: Complete purge
         if: ${{ always() }}
         run: |
