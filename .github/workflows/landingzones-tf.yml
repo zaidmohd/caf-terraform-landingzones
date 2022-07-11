@@ -7,8 +7,12 @@ name: landingzones-tf15
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron:  '0 1 * * *'
+
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/landingzones-tf.yml'
 
 env:
   TF_CLI_ARGS: '-no-color'
